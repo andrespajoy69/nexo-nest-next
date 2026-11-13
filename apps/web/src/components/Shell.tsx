@@ -163,7 +163,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         )}
 
         <div className="sidebar__pie">
-          <a className="nav-item" href="/presentacion.html">
+          <a className="nav-item" href="/">
             <Icon name="panel" /> Presentación
           </a>
           <Link className={`nav-item ${activo('/perfil') ? 'activo' : ''}`} href="/perfil">

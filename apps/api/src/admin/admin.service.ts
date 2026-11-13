@@ -300,7 +300,7 @@ export class AdminService {
               t.sla_respuesta_incumplido, t.sla_resolucion_incumplido,
               CONCAT(s.nombre, ' ', s.apellido) AS solicitante,
               s.email AS solicitante_email,
-              CONCAT(a.nombre, ' ', a.apellido) AS analista
+              NULLIF(TRIM(CONCAT(a.nombre, ' ', a.apellido)), '') AS analista
          FROM tickets t
          JOIN usuarios s ON s.id_usuario = t.id_solicitante
          LEFT JOIN usuarios a ON a.id_usuario = t.id_analista_asignado

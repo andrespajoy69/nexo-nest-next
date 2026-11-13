@@ -254,7 +254,7 @@ export class TicketsService {
     const [rows] = await this.db.query<any[]>(
       `SELECT t.id_ticket, t.codigo, t.asunto, t.categoria, t.subcategoria, t.urgencia, t.estado,
               t.nivel_escalamiento, t.fecha_creacion, t.sla_vencimiento_resolucion, t.sla_pausado,
-              CONCAT(a.nombre, ' ', a.apellido) AS analista
+              NULLIF(TRIM(CONCAT(a.nombre, ' ', a.apellido)), '') AS analista
          FROM tickets t
          LEFT JOIN usuarios a ON a.id_usuario = t.id_analista_asignado
         WHERE t.id_solicitante = ?
@@ -327,7 +327,7 @@ export class TicketsService {
                 WHEN 'Media' THEN 'amarillo'
                 ELSE 'verde' END AS semaforo,
               CONCAT(u.nombre, ' ', u.apellido) AS solicitante,
-              CONCAT(a.nombre, ' ', a.apellido) AS analista,
+              NULLIF(TRIM(CONCAT(a.nombre, ' ', a.apellido)), '') AS analista,
               t.id_analista_asignado,
               t.sla_vencimiento_respuesta, t.sla_vencimiento_resolucion,
               (t.estado NOT IN ('Resuelto', 'Cerrado') AND NOT t.sla_pausado
