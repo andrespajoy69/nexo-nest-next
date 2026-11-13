@@ -59,25 +59,6 @@ La aplicación original (`C:\Users\andre\OneDrive\Escritorio\nexo`) no se modifi
    LEGACY_UPLOADS_DIR=C:\Users\andre\OneDrive\Escritorio\nexo\uploads\evidencias
    ```
 
-5. Migrar los datos existentes desde MySQL (opcional si la base ya está cargada):
-
-   ```powershell
-   npm run migrate:pg
-   ```
-
-   El script copia usuarios, tickets, evidencias, historial, comentarios, notificaciones, KEDB,
-   configuración y las tablas `legacy_*`; al final ajusta las secuencias de PostgreSQL.
-
-6. Compilar y arrancar:
-
-   ```powershell
-   npm run build
-   npm run start:api
-   npm run start:web
-   ```
-
-   API: `http://localhost:3001/api` · Web: `http://localhost:3002`
-   Landing pública: `http://localhost:3002` · Aplicación: `http://localhost:3002/app`
 
 ## Desarrollo
 
@@ -122,12 +103,4 @@ apps/
 - Exportación CSV de tickets y usuarios.
 - Landing pública en `/`, aplicación en `/app` y presentación original en `/presentacion.html`.
 
-## Credenciales de prueba
 
-| Correo | Contraseña | Rol |
-| --- | --- | --- |
-| `admin@nexo.com` | `123456` | Administrador |
-| `analista@nexo.com` | `123456` | Analista L1 |
-| `usuario@nexo.com` | `123456` | Usuario |
-
-> Cambiar estas contraseñas y `JWT_SECRET` antes de cualquier despliegue real.
