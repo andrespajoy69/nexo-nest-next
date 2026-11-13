@@ -1,14 +1,4 @@
 # Nexo · NestJS + Next.js + PostgreSQL
-
-Migración de la mesa de ayuda Nexo desde Express + MySQL + frontend estático hacia un monorepo con:
-
-- **API** en NestJS (`apps/api`), TypeScript y PostgreSQL mediante `pg`.
-- **Web** en Next.js 15 con App Router (`apps/web`).
-- **PostgreSQL 17** como base de datos activa.
-- **MySQL** solo como origen para migrar los datos existentes.
-
-La aplicación original (`C:\Users\andre\OneDrive\Escritorio\nexo`) no se modifica.
-
 ## Requisitos
 
 - Node.js 20 o superior (probado con Node 26).
