@@ -1,0 +1,18 @@
+{
+  "name": "nexo-nest-next",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nexo migrado a NestJS + Next.js",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:api": "npm run start:dev --workspace @nexo/api",
+    "dev:web": "npm run dev --workspace @nexo/web",
+    "build": "npm run build --workspace @nexo/api && npm run build --workspace @nexo/web",
+    "start:api": "npm run start:prod --workspace @nexo/api",
+    "start:web": "npm run start --workspace @nexo/web",
+    "migrate:pg": "npm run migrate:pg --workspace @nexo/api"
+  }
+}

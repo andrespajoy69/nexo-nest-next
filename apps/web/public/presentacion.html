@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Presentación del proyecto Nexo: mesa de ayuda inteligente para TI y ciberseguridad." />
+  <title>Nexo · Presentación del proyecto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23b7f36b'/><path d='M28 68V44h10v24zm17 0V32h10v36zm17 0V50h10v18z' fill='%2308131d'/></svg>" />
+  <link rel="stylesheet" href="/presentacion.css?v=2.3.1" />
+</head>
+<body>
+  <div class="deck" id="deck">
+    <section class="slide slide--portada activa">
+      <div class="slide__contenido">
+        <span class="eyebrow">MVP · Mesa de ayuda inteligente</span>
+        <h1>Nexo</h1>
+        <p class="lead">Centraliza las solicitudes de TI y los reportes de ciberseguridad en una sola plataforma, con triaje automático, semáforo y SLA.</p>
+        <svg class="ilustracion" viewBox="0 0 360 180" aria-hidden="true">
+          <rect x="20" y="30" width="320" height="120" rx="18" fill="rgba(16,31,41,.9)" stroke="rgba(190,211,216,.18)" />
+          <rect x="42" y="52" width="92" height="18" rx="9" fill="rgba(183,243,107,.18)" />
+          <rect x="42" y="82" width="132" height="12" rx="6" fill="rgba(144,215,237,.16)" />
+          <rect x="42" y="104" width="86" height="12" rx="6" fill="rgba(255,200,107,.14)" />
+          <circle cx="278" cy="90" r="34" fill="rgba(183,243,107,.12)" stroke="#b7f36b" stroke-width="2" />
+          <path d="M266 90 l9 9 16-20" fill="none" stroke="#b7f36b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="238" cy="58" r="6" fill="#90d7ed" />
+          <circle cx="298" cy="132" r="6" fill="#ffc86b" />
+        </svg>
+        <div class="portada__meta">
+          <span>Presentación del proyecto</span>
+          <span>http://localhost:3002</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">01 · Problema</span>
+        <h2>El soporte se fragmenta</h2>
+        <ul class="lista">
+          <li>Las solicitudes llegan por correo, chat o llamadas sin priorización.</li>
+          <li>Los incidentes de seguridad se mezclan con soporte operativo.</li>
+          <li>No hay visibilidad del tiempo de atención ni del responsable.</li>
+          <li>Los archivos adjuntos pueden propagar malware.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">02 · Solución</span>
+        <h2>Nexo unifica la atención</h2>
+        <div class="grid">
+          <div class="tarjeta"><strong>Un solo canal</strong><p>TI y ciberseguridad en la misma mesa de ayuda.</p></div>
+          <div class="tarjeta"><strong>Triaje automático</strong><p>Eleva la urgencia ante palabras clave de riesgo.</p></div>
+          <div class="tarjeta"><strong>Semáforo</strong><p>Prioriza lo crítico y lo vencido.</p></div>
+          <div class="tarjeta"><strong>SLA visible</strong><p>Tiempo de respuesta y resolución controlado.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">03 · Arquitectura</span>
+        <h2>Stack y estructura</h2>
+        <svg class="ilustracion" viewBox="0 0 360 180" aria-hidden="true">
+          <rect x="30" y="24" width="300" height="34" rx="10" fill="rgba(183,243,107,.12)" stroke="#b7f36b" />
+          <text x="180" y="46" text-anchor="middle" fill="#f2f5f2" font-size="13" font-family="DM Sans">Frontend · HTML, CSS, JS</text>
+          <rect x="30" y="74" width="300" height="34" rx="10" fill="rgba(144,215,237,.12)" stroke="#90d7ed" />
+          <text x="180" y="96" text-anchor="middle" fill="#f2f5f2" font-size="13" font-family="DM Sans">Backend · Node.js + Express</text>
+          <rect x="30" y="124" width="300" height="34" rx="10" fill="rgba(255,200,107,.12)" stroke="#ffc86b" />
+          <text x="180" y="146" text-anchor="middle" fill="#f2f5f2" font-size="13" font-family="DM Sans">Base de datos · MySQL</text>
+          <path d="M180 58 v16 M180 108 v16" stroke="rgba(190,211,216,.4)" stroke-width="2" />
+        </svg>
+        <div class="columnas">
+          <div>
+            <h3>Frontend</h3>
+            <p>HTML, CSS y JavaScript vanilla. SPA con rutas hash.</p>
+            <h3>Backend</h3>
+            <p>Node.js + Express. API REST segura por roles.</p>
+            <h3>Base de datos</h3>
+            <p>MySQL. Migración no destructiva.</p>
+          </div>
+          <div>
+            <h3>Seguridad</h3>
+            <p>JWT para sesiones, bcrypt para contraseñas.</p>
+            <h3>Archivos</h3>
+            <p>Evidencias en disco con hash SHA-256 y cuarentena.</p>
+            <h3>Presentación</h3>
+            <p>Página pública en <code>/</code>, aplicación en <code>/app</code>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">04 · Roles</span>
+        <h2>Tres niveles de acceso</h2>
+        <div class="grid">
+          <div class="tarjeta"><strong>Usuario</strong><p>Crea tickets, adjunta evidencias, comenta y confirma cierre.</p></div>
+          <div class="tarjeta"><strong>Analista L1</strong><p>Triaje, atención de la cola, estados, escalamiento y liberación.</p></div>
+          <div class="tarjeta"><strong>Administrador</strong><p>Usuarios, SLA, KEDB, auditoría, métricas y reasignación.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">05 · Flujo del ticket</span>
+        <h2>De la solicitud al cierre</h2>
+        <ol class="flujo">
+          <li>El usuario crea el ticket.</li>
+          <li>El triaje ajusta la urgencia.</li>
+          <li>Se calculan los tiempos de SLA.</li>
+          <li>El caso entra en la cola priorizada.</li>
+          <li>Un analista lo toma y gestiona.</li>
+          <li>Se escala si es necesario.</li>
+          <li>Se resuelve y el usuario confirma el cierre.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">06 · Triaje automático</span>
+        <h2>Detección de riesgo</h2>
+        <svg class="ilustracion" viewBox="0 0 360 180" aria-hidden="true">
+          <rect x="30" y="30" width="95" height="120" rx="12" fill="rgba(255,115,120,.12)" stroke="#ff7378" />
+          <rect x="132" y="30" width="95" height="120" rx="12" fill="rgba(255,200,107,.12)" stroke="#ffc86b" />
+          <rect x="234" y="30" width="95" height="120" rx="12" fill="rgba(183,243,107,.12)" stroke="#b7f36b" />
+          <circle cx="77" cy="62" r="10" fill="#ff7378" />
+          <circle cx="179" cy="62" r="10" fill="#ffc86b" />
+          <circle cx="281" cy="62" r="10" fill="#b7f36b" />
+          <rect x="55" y="88" width="44" height="8" rx="4" fill="rgba(255,255,255,.18)" />
+          <rect x="157" y="88" width="44" height="8" rx="4" fill="rgba(255,255,255,.18)" />
+          <rect x="259" y="88" width="44" height="8" rx="4" fill="rgba(255,255,255,.18)" />
+        </svg>
+        <ul class="lista">
+          <li>Analiza asunto y descripción.</li>
+          <li>Detecta ransomware, malware, phishing, accesos no autorizados y más.</li>
+          <li>Ciberseguridad sube automáticamente a <strong>Alta</strong>.</li>
+          <li>Las palabras clave elevan a <strong>Crítica</strong>.</li>
+          <li>Se registran las coincidencias en el ticket.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">07 · SLA</span>
+        <h2>Tiempos controlados</h2>
+        <svg class="ilustracion" viewBox="0 0 360 180" aria-hidden="true">
+          <circle cx="180" cy="90" r="58" fill="none" stroke="rgba(190,211,216,.2)" stroke-width="10" />
+          <path d="M180 32 A58 58 0 0 1 238 90" fill="none" stroke="#b7f36b" stroke-width="10" stroke-linecap="round" />
+          <line x1="180" y1="90" x2="180" y2="52" stroke="#f2f5f2" stroke-width="4" stroke-linecap="round" />
+          <line x1="180" y1="90" x2="212" y2="90" stroke="#90d7ed" stroke-width="4" stroke-linecap="round" />
+          <circle cx="180" cy="90" r="6" fill="#f2f5f2" />
+        </svg>
+        <div class="grid">
+          <div class="tarjeta"><strong>Respuesta</strong><p>Tiempo para la primera atención.</p></div>
+          <div class="tarjeta"><strong>Resolución</strong><p>Tiempo para resolver el caso.</p></div>
+          <div class="tarjeta"><strong>Pausa</strong><p>Se detiene en “En Espera” y se reanuda al volver a “En Progreso”.</p></div>
+          <div class="tarjeta"><strong>Incumplimiento</strong><p>Se registra al vencer o al resolver fuera de tiempo.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">08 · Escalamiento</span>
+        <h2>Derivación a L2/SOC</h2>
+        <ul class="lista">
+          <li>El analista escala con un motivo obligatorio.</li>
+          <li>El caso pasa a nivel L2/SOC.</li>
+          <li>Conserva su SLA original.</li>
+          <li>Notifica al solicitante y al personal especializado.</li>
+          <li>Queda registrado en el historial.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">09 · Evidencias</span>
+        <h2>Cuarentena preventiva</h2>
+        <ul class="lista">
+          <li>Todo archivo adjunto entra en cuarentena.</li>
+          <li>Solo el personal autorizado puede descargarlo.</li>
+          <li>Un analista o administrador puede liberarlo.</li>
+          <li>Se calcula y guarda el hash SHA-256.</li>
+          <li>Reduce el riesgo de malware.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">10 · Base de conocimiento</span>
+        <h2>KEDB</h2>
+        <ul class="lista">
+          <li>Artículos de autoayuda para problemas frecuentes.</li>
+          <li>Sugerencias mientras se escribe el ticket.</li>
+          <li>Administración puede crear, editar y desactivar artículos.</li>
+          <li>Los usuarios consultan guías sin crear tickets.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">11 · Notificaciones</span>
+        <h2>Comunicación interna</h2>
+        <ul class="lista">
+          <li>Avisos de creación, asignación y cambios de estado.</li>
+          <li>Comentarios y escalamientos.</li>
+          <li>Contador de no leídas en la barra superior.</li>
+          <li>Marcar como leída o todas a la vez.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">12 · Administración</span>
+        <h2>Gobierno del servicio</h2>
+        <svg class="ilustracion" viewBox="0 0 360 180" aria-hidden="true">
+          <rect x="30" y="30" width="140" height="90" rx="12" fill="rgba(144,215,237,.1)" stroke="#90d7ed" />
+          <rect x="48" y="96" width="16" height="14" rx="3" fill="#90d7ed" />
+          <rect x="72" y="82" width="16" height="28" rx="3" fill="#b7f36b" />
+          <rect x="96" y="68" width="16" height="42" rx="3" fill="#ffc86b" />
+          <rect x="120" y="54" width="16" height="56" rx="3" fill="#ff7378" />
+          <rect x="186" y="30" width="144" height="90" rx="12" fill="rgba(183,243,107,.08)" stroke="#b7f36b" />
+          <circle cx="220" cy="62" r="16" fill="rgba(183,243,107,.18)" stroke="#b7f36b" />
+          <circle cx="258" cy="62" r="16" fill="rgba(144,215,237,.18)" stroke="#90d7ed" />
+          <circle cx="296" cy="62" r="16" fill="rgba(255,200,107,.18)" stroke="#ffc86b" />
+        </svg>
+        <div class="grid">
+          <div class="tarjeta"><strong>Métricas</strong><p>Tickets, urgencias, SLA y analistas destacados.</p></div>
+          <div class="tarjeta"><strong>Usuarios</strong><p>Crear, editar, activar y restablecer claves.</p></div>
+          <div class="tarjeta"><strong>SLA</strong><p>Configurar horas por urgencia.</p></div>
+          <div class="tarjeta"><strong>Auditoría</strong><p>Trazabilidad de todos los eventos.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">13 · Presentación inicial</span>
+        <h2>Página pública</h2>
+        <ul class="lista">
+          <li>Ubicada en <code>/</code>.</li>
+          <li>Explica problema, solución, funciones y flujo.</li>
+          <li>Botones directos a la aplicación.</li>
+          <li>Enlaces antiguos se redirigen a <code>/app</code>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">14 · Datos preservados</span>
+        <h2>Migración no destructiva</h2>
+        <ul class="lista">
+          <li>3 usuarios conservados.</li>
+          <li>3 tickets conservados.</li>
+          <li>10 artículos de la base de conocimiento.</li>
+          <li>Tablas antiguas guardadas como <code>legacy_*</code>.</li>
+          <li>SLA migrados corregidos a hora local.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">15 · Mejoras realizadas</span>
+        <h2>Valor agregado</h2>
+        <ul class="lista">
+          <li>Autenticación real con JWT y bcrypt.</li>
+          <li>Reasignación de analista desde el detalle.</li>
+          <li>Exportación CSV de tickets y usuarios.</li>
+          <li>Actualización automática de la cola.</li>
+          <li>Alerta de tickets fuera de SLA.</li>
+          <li>Animaciones y mejor experiencia visual.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">16 · Calidad</span>
+        <h2>Pruebas y validación</h2>
+        <div class="grid">
+          <div class="tarjeta"><strong>57 pruebas</strong><p>API y flujos principales.</p></div>
+          <div class="tarjeta"><strong>Roles</strong><p>Permisos verificados.</p></div>
+          <div class="tarjeta"><strong>SLA</strong><p>Cálculo y vencimiento validados.</p></div>
+          <div class="tarjeta"><strong>UI</strong><p>Sin errores de consola en navegador.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">17 · Ejecución</span>
+        <h2>Cómo iniciar</h2>
+        <pre class="codigo">npm install
+npm run db:migrar
+npm start
+npm run test:api</pre>
+        <p class="nota">Presentación: <code>http://localhost:3002/presentacion.html</code> · Aplicación: <code>http://localhost:3002</code></p>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide__contenido">
+        <span class="eyebrow">18 · Futuro</span>
+        <h2>Próximas mejoras</h2>
+        <ul class="lista">
+          <li>Recuperación de contraseña por correo.</li>
+          <li>Paginación y búsqueda avanzada.</li>
+          <li>Notificaciones por correo con SMTP.</li>
+          <li>Tema claro y oscuro.</li>
+          <li>Métricas en tiempo real.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide slide--cierre">
+      <div class="slide__contenido">
+        <span class="eyebrow">Nexo</span>
+        <h1>Gracias</h1>
+        <p class="lead">Mesa de ayuda inteligente para TI y ciberseguridad.</p>
+        <p class="nota">http://localhost:3002 · http://localhost:3002/presentacion.html</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="controles">
+    <button type="button" id="anterior" aria-label="Anterior">←</button>
+    <span id="contador">1 / 19</span>
+    <button type="button" id="siguiente" aria-label="Siguiente">→</button>
+  </div>
+  <div class="progreso"><div id="barra"></div></div>
+
+  <script src="/js/presentacion.js?v=2.3.0"></script>
+</body>
+</html>
