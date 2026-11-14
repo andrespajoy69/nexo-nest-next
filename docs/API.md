@@ -40,7 +40,7 @@ El servidor ignora cualquier `rol` enviado y crea la cuenta como `Usuario`. Devu
 ### `POST /api/auth/login` (público)
 
 ```json
-{ "email": "usuario@nexo.com", "password": "123456" }
+{ "email": "usuario@ejemplo.com", "password": "TuClaveSegura" }
 ```
 
 Devuelve `{ token, usuario }`. Límite: 20 intentos cada 15 minutos por IP.
@@ -65,7 +65,7 @@ No permite cambiar rol, correo ni estado de la cuenta.
 ### `PATCH /api/auth/password`
 
 ```json
-{ "actual": "123456", "nueva": "nuevaClave123" }
+{ "actual": "TuClaveActual", "nueva": "NuevaClave123" }
 ```
 
 ## Tickets

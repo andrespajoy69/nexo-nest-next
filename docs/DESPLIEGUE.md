@@ -199,7 +199,7 @@ Invoke-WebRequest https://TU-WEB -UseBasicParsing | Select-Object StatusCode
 $base = 'https://TU-API/api'
 $login = Invoke-RestMethod -Method Post -Uri "$base/auth/login" `
   -ContentType 'application/json' `
-  -Body (@{ email='usuario@nexo.com'; password='123456' } | ConvertTo-Json)
+  -Body (@{ email='usuario@ejemplo.com'; password='TU_CLAVE' } | ConvertTo-Json)
 $h = @{ Authorization = "Bearer $($login.token)" }
 
 # Debe devolver 403

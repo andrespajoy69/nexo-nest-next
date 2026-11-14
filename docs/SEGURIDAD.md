@@ -117,7 +117,7 @@ $base = 'http://localhost:3001/api'
 # 1. Login como usuario normal
 $login = Invoke-RestMethod -Method Post -Uri "$base/auth/login" `
   -ContentType 'application/json' `
-  -Body (@{ email = 'usuario@nexo.com'; password = '123456' } | ConvertTo-Json)
+  -Body (@{ email = 'usuario@ejemplo.com'; password = 'TU_CLAVE' } | ConvertTo-Json)
 $h = @{ Authorization = "Bearer $($login.token)" }
 
 # 2. La consola admin debe responder 403
@@ -143,7 +143,7 @@ Prueba de que el registro ignora el rol:
 $email = "prueba-$([guid]::NewGuid().ToString('N').Substring(0,8))@nexo.com"
 $r = Invoke-RestMethod -Method Post -Uri "$base/auth/registro" `
   -ContentType 'application/json' `
-  -Body (@{ nombre='Prueba'; email=$email; password='123456'; rol='Administrador' } | ConvertTo-Json)
+  -Body (@{ nombre='Prueba'; email=$email; password='TuClaveSegura'; rol='Administrador' } | ConvertTo-Json)
 $r.usuario.rol   # Usuario
 ```
 
