@@ -136,30 +136,40 @@ export function SeguimientoTab() {
   const [tickets, setTickets] = useState<any[] | null>(null);
   const [error, setError] = useState<any>(null);
   const [pagina, setPagina] = useState(1);
+  // Fuerza una nueva consulta aunque los filtros no hayan cambiado.
+  const [recarga, setRecarga] = useState(0);
+  const [aplicando, setAplicando] = useState(false);
 
-  const cargar = useCallback(async (f: Filtros) => {
-    try {
-      const r: any = await API.tickets.listar({
-        q: f.q,
-        estado: f.estado,
-        categoria: f.categoria,
-        urgencia: f.urgencia,
-        nivel: f.nivel,
-        sin_asignar: f.sin_asignar ? '1' : '',
-        mios: f.mios ? '1' : '',
-        vencidos: f.vencidos ? '1' : '',
-        incluir_cerrados: f.incluir_cerrados ? '1' : '',
-      });
-      setTickets(r || []);
-      setError(null);
-    } catch (err) {
-      setError(err);
-    }
-  }, []);
+  const cargar = useCallback(
+    async (f: Filtros) => {
+      setAplicando(true);
+      try {
+        const r: any = await API.tickets.listar({
+          q: f.q,
+          estado: f.estado,
+          categoria: f.categoria,
+          urgencia: f.urgencia,
+          nivel: f.nivel,
+          sin_asignar: f.sin_asignar ? '1' : '',
+          mios: f.mios ? '1' : '',
+          vencidos: f.vencidos ? '1' : '',
+          incluir_cerrados: f.incluir_cerrados ? '1' : '',
+        });
+        setTickets(r || []);
+        setError(null);
+      } catch (err: any) {
+        setError(err);
+        toast(err?.message || 'No se pudieron cargar los tickets', 'error');
+      } finally {
+        setAplicando(false);
+      }
+    },
+    [toast],
+  );
 
   useEffect(() => {
     cargar(aplicados);
-  }, [aplicados, cargar]);
+  }, [aplicados, recarga, cargar]);
 
   useEffect(() => {
     setPagina(1);
@@ -168,17 +178,21 @@ export function SeguimientoTab() {
   const actualizar = (parcial: Partial<Filtros>) => setFiltros((f) => ({ ...f, ...parcial }));
   const aplicar = (e: React.FormEvent) => {
     e.preventDefault();
-    setAplicados(filtros);
+    // Copia nueva + recarga: el botón siempre responde, aun sin cambiar filtros.
+    setAplicados({ ...filtros });
+    setRecarga((n) => n + 1);
   };
   const limpiar = () => {
-    setFiltros(FILTROS_VACIOS);
-    setAplicados(FILTROS_VACIOS);
+    setFiltros({ ...FILTROS_VACIOS });
+    setAplicados({ ...FILTROS_VACIOS });
+    setRecarga((n) => n + 1);
   };
 
   const atajo = (parcial: Partial<Filtros>) => {
     const siguiente = { ...FILTROS_VACIOS, ...parcial };
     setFiltros(siguiente);
-    setAplicados(siguiente);
+    setAplicados({ ...siguiente });
+    setRecarga((n) => n + 1);
   };
 
   const tomar = async (e: React.MouseEvent, id: number) => {
@@ -372,8 +386,13 @@ export function SeguimientoTab() {
           <button type="button" className="btn btn--pequeno btn--fantasma" onClick={limpiar}>
             Limpiar
           </button>
-          <button type="submit" className="btn btn--pequeno btn--primario">
-            Aplicar
+          <button
+            type="submit"
+            className="btn btn--pequeno btn--primario"
+            disabled={aplicando}
+            aria-busy={aplicando}
+          >
+            {aplicando ? 'Aplicando…' : 'Aplicar'}
           </button>
         </div>
       </form>
