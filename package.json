@@ -13,6 +13,7 @@
     "build": "npm run build --workspace @nexo/api && npm run build --workspace @nexo/web",
     "start:api": "npm run start:prod --workspace @nexo/api",
     "start:web": "npm run start --workspace @nexo/web",
-    "migrate:pg": "npm run migrate:pg --workspace @nexo/api"
+    "migrate:pg": "npm run migrate:pg --workspace @nexo/api",
+    "seed:admin": "npm run seed:admin --workspace @nexo/api"
   }
 }

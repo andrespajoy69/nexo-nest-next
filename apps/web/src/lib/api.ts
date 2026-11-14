@@ -1,4 +1,20 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+declare global {
+  interface Window {
+    __NEXO_API_URL__?: string;
+  }
+}
+
+const API_POR_DEFECTO = (
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
+).replace(/\/$/, '');
+
+/** URL efectiva de la API: configuración runtime (/config.js) o valor de build. */
+export function apiUrl(): string {
+  if (typeof window !== 'undefined' && window.__NEXO_API_URL__) {
+    return window.__NEXO_API_URL__.replace(/\/$/, '');
+  }
+  return API_POR_DEFECTO;
+}
 
 export class ApiError extends Error {
   status: number;
@@ -52,7 +68,7 @@ export async function apiFetch<T = any>(ruta: string, opciones: RequestInit = {}
 
   let res: Response;
   try {
-    res = await fetch(`${API_URL}${ruta}`, { ...opciones, headers, body });
+    res = await fetch(`${apiUrl()}${ruta}`, { ...opciones, headers, body });
   } catch {
     throw new ApiError('No se pudo conectar con el servidor. Verifica que la API esté activa.', 0);
   }

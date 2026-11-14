@@ -4,5 +4,6 @@ dist
 .env
 .env.local
 uploads
+backup
 *.log
 .DS_Store

@@ -15,7 +15,7 @@ import { NotificacionesModule } from '../notificaciones/notificaciones.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        secret: config.get<string>('JWT_SECRET', 'nexo-dev-secret'),
+        secret: config.get<string>('JWT_SECRET') || 'nexo-dev-secret',
         signOptions: { expiresIn: config.get<string>('JWT_EXPIRA', '8h') as any },
       }),
     }),

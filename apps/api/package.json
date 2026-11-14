@@ -6,7 +6,8 @@
     "build": "tsc -p tsconfig.json",
     "start:dev": "tsc -p tsconfig.json && node dist/main.js",
     "start:prod": "node dist/main.js",
-    "migrate:pg": "node scripts/migrate-to-postgres.mjs"
+    "migrate:pg": "node scripts/migrate-to-postgres.mjs",
+    "seed:admin": "node scripts/seed-admin.mjs"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",

@@ -1,0 +1,55 @@
+# Despliegue automático en Render (https://render.com).
+# 1. Sube el repositorio a GitHub.
+# 2. En Render: New > Blueprint > conecta este repositorio.
+# 3. Completa WEB_ORIGIN (dominio del frontend) y NEXT_PUBLIC_API_URL (dominio del API + /api).
+# 4. Tras crear la base, restaura el dump local con psql (ver docs/DESPLIEGUE.md).
+databases:
+  - name: nexo-db
+    plan: free
+    databaseName: nexo
+    user: nexo
+    region: oregon
+
+services:
+  - type: web
+    name: nexo-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerContext: .
+    dockerfilePath: ./apps/api/Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nexo-db
+          property: connectionString
+      - key: DB_SSL
+        value: "false"
+      - key: WEB_ORIGIN
+        sync: false
+      - key: UPLOADS_DIR
+        value: uploads/evidencias
+
+  - type: web
+    name: nexo-web
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerContext: .
+    dockerfilePath: ./apps/web/Dockerfile
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      # Se lee en tiempo de ejecución desde /config.js (no requiere recompilar).
+      - key: NEXO_API_URL
+        sync: false

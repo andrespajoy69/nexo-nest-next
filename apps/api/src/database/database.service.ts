@@ -19,14 +19,43 @@ export class DatabaseService implements OnModuleDestroy {
   readonly pool: Pool;
 
   constructor(private readonly config: ConfigService) {
-    this.pool = new Pool({
-      host: this.config.get<string>('DB_HOST', '127.0.0.1'),
-      port: Number(this.config.get<string>('DB_PORT', '5432')),
-      user: this.config.get<string>('DB_USER', 'nexo'),
-      password: this.config.get<string>('DB_PASSWORD', 'nexo'),
-      database: this.config.get<string>('DB_NAME', 'nexo'),
-      max: 10,
+    const url = this.config.get<string>('DATABASE_URL')?.trim();
+    const ssl = ['1', 'true', 'require', 'required'].includes(
+      String(this.config.get<string>('DB_SSL', '')).toLowerCase(),
+    );
+    const max = Number(this.config.get<string>('DB_POOL_MAX', '10')) || 10;
+    const comunes = {
+      max,
+      connectionTimeoutMillis: 10_000,
+      idleTimeoutMillis: 30_000,
+      application_name: 'nexo-api',
+    };
+
+    // En producción se usa DATABASE_URL (Railway, Render, Neon, Supabase...).
+    // En local se mantienen las variables DB_* para no romper el flujo existente.
+    this.pool = url
+      ? new Pool({
+          ...comunes,
+          connectionString: url,
+          ssl: ssl ? { rejectUnauthorized: false } : undefined,
+        })
+      : new Pool({
+          ...comunes,
+          host: this.config.get<string>('DB_HOST', '127.0.0.1'),
+          port: Number(this.config.get<string>('DB_PORT', '5432')),
+          user: this.config.get<string>('DB_USER', 'nexo'),
+          password: this.config.get<string>('DB_PASSWORD', 'nexo'),
+          database: this.config.get<string>('DB_NAME', 'nexo'),
+          ssl: ssl ? { rejectUnauthorized: false } : undefined,
+        });
+
+    this.pool.on('error', (error) => {
+      this.logger.error(`Error inesperado del pool PostgreSQL: ${error.message}`);
     });
+
+    this.logger.log(
+      url ? 'PostgreSQL configurado mediante DATABASE_URL' : 'PostgreSQL configurado mediante DB_HOST/DB_PORT',
+    );
   }
 
   async query<T = any[]>(sql: string, params: any[] = []): Promise<[T, ResultadoQuery]> {
