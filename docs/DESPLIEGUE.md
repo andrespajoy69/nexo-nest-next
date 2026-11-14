@@ -26,6 +26,83 @@ Hay dos caminos equivalentes:
 
 El repositorio ya incluye `render.yaml` y los Dockerfiles, así que la opción A es la más rápida.
 
+## Despliegue actual
+
+Fecha: **13/11/2026**. Proveedor: **Render** (región Oregon, plan gratuito). Blueprint: `nexo`.
+
+| Recurso | Nombre | Identificador | URL |
+| --- | --- | --- | --- |
+| Frontend | `nexo-web` | `srv-dbrqfmjrjlhs73c7tidg` | <https://nexo-web-lpyd.onrender.com> |
+| API | `nexo-api` | `srv-dbrqfvjrjlhs73c7ufdg` | <https://nexo-api-k5cu.onrender.com/api> |
+| PostgreSQL | `nexo-db` | `dpg-dbrqfmrrjlhs73c7tin0-a` | `dpg-dbrqfmrrjlhs73c7tin0-a.oregon-postgres.render.com` |
+| Blueprint | `nexo` | `exs-dbrqf3tg1s2s73d98iug` | `render.yaml` |
+
+Base de datos: `nexo_xz9w`, usuario `nexo`, PostgreSQL 18. El API usa la URL **interna** que Render
+inyecta en `DATABASE_URL`; la URL externa solo se usa para administrar la base desde `psql`.
+
+Datos restaurados desde `backup/nexo-local.sql`:
+
+```text
+usuarios=7  tickets=5  kedb=130  configuracion=1
+```
+
+Variables activas:
+
+| Servicio | Variable | Valor |
+| --- | --- | --- |
+| `nexo-api` | `NODE_ENV` | `production` |
+| `nexo-api` | `DATABASE_URL` | URL interna de `nexo-db` |
+| `nexo-api` | `DB_SSL` | `false` (red interna de Render) |
+| `nexo-api` | `JWT_SECRET` | Generado por Render (44 caracteres) |
+| `nexo-api` | `WEB_ORIGIN` | `https://nexo-web-lpyd.onrender.com` |
+| `nexo-api` | `UPLOADS_DIR` | `uploads/evidencias` |
+| `nexo-web` | `NEXO_API_URL` | `https://nexo-api-k5cu.onrender.com/api` |
+| `nexo-web` | `PORT` | `3000` |
+
+Verificación realizada:
+
+- `/api/health` responde `ok: true` y `base_de_datos: conectada`.
+- `/config.js` entrega la URL real del API.
+- Login de administrador y listado de 7 usuarios correcto.
+- Usuario normal recibe **403** en `/api/admin/usuarios`, `/metricas`, `/auditoria`, `/tickets`
+  (cola global) y al intentar cambiar estados o asignar.
+- Un ticket ajeno responde **404** (no se filtra su existencia).
+- Evidencia: subida `201`, descarga del dueño en cuarentena `403`, descarga de administrador
+  `200` con el contenido correcto. Los datos de prueba se eliminaron después.
+- Contraseñas de las 7 cuentas rotadas antes de publicar (no están en el repositorio).
+
+### Actualizar variables o redeployar
+
+Desde el panel: servicio > **Environment** > **Edit** > cambiar el valor > **Save, rebuild, and
+deploy**. Para solo redeployar: **Manual Deploy > Deploy latest commit**.
+
+Por API de Render (con una API key creada en Account Settings > API Keys):
+
+```powershell
+$key = 'rnd_...'
+$h = @{ Authorization = "Bearer $key"; 'Content-Type' = 'application/json' }
+
+# Cambiar una variable
+Invoke-RestMethod -Method Put `
+  -Uri 'https://api.render.com/v1/services/srv-dbrqfvjrjlhs73c7ufdg/env-vars/WEB_ORIGIN' `
+  -Headers $h -Body (@{ value = 'https://nexo-web-lpyd.onrender.com' } | ConvertTo-Json)
+
+# Redeployar sin cambiar el código
+Invoke-RestMethod -Method Post `
+  -Uri 'https://api.render.com/v1/services/srv-dbrqfvjrjlhs73c7ufdg/deploys' `
+  -Headers $h -Body (@{ clearCache = 'do_not_clear' } | ConvertTo-Json)
+```
+
+### Limitaciones del plan gratuito
+
+- Los servicios web se suspenden por inactividad; la primera petición puede tardar ~50 segundos.
+- PostgreSQL gratuito **expira el 13/12/2026**. Render lo elimina si no se actualiza a un plan de
+  pago. Descarga un respaldo antes de esa fecha con `pg_dump`.
+- No hay disco persistente: las evidencias viven en el sistema de archivos del contenedor y se
+  pierden en cada redeploy o reinicio. Para conservarlas, monta un disco persistente (plan pago) en
+  `/app/apps/api/uploads/evidencias` o migra a S3/Cloudflare R2.
+- El rate limit es en memoria; con una sola instancia es suficiente.
+
 ## Variables de entorno
 
 ### API

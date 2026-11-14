@@ -2,6 +2,26 @@
 
 Mesa de ayuda de TI y ciberseguridad con backend NestJS, frontend Next.js y PostgreSQL.
 
+## Aplicación publicada
+
+| Componente | URL / ubicación |
+| --- | --- |
+| Frontend Next.js | <https://nexo-web-lpyd.onrender.com> |
+| Entrada / login | <https://nexo-web-lpyd.onrender.com/app> |
+| API NestJS | <https://nexo-api-k5cu.onrender.com/api> |
+| Salud del API | <https://nexo-api-k5cu.onrender.com/api/health> |
+| Base de datos | Render PostgreSQL `nexo-db` (Oregon, base `nexo_xz9w`) |
+| Repositorio | <https://github.com/andrespajoy69/nexo-nest-next> |
+
+El despliegue usa el Blueprint `nexo` de Render (`render.yaml`), con servicios `nexo-web`,
+`nexo-api` y `nexo-db`. Los detalles, identificadores y pasos de actualización están en
+[`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md#despliegue-actual).
+
+> **Plan gratuito:** los servicios web se suspenden por inactividad (la primera petición puede
+> tardar ~50 segundos) y PostgreSQL gratuito expira el **13 de diciembre de 2026**. Las evidencias
+> se guardan en disco efímero: se pierden al redeploy. Para producción real, cambia a un plan pago
+> con disco persistente o almacenamiento de objetos.
+
 ## Documentación
 
 | Documento | Contenido |

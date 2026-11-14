@@ -16,13 +16,26 @@ Navegador
    └──────────────► Descarga autenticada de evidencias a través del API
 ```
 
+## Despliegue actual
+
+| Pieza | Servicio | URL |
+| --- | --- | --- |
+| Frontend | Render `nexo-web` (Docker, Next.js) | <https://nexo-web-lpyd.onrender.com> |
+| Backend | Render `nexo-api` (Docker, NestJS) | <https://nexo-api-k5cu.onrender.com/api> |
+| Base de datos | Render PostgreSQL `nexo-db` | `dpg-dbrqfmrrjlhs73c7tin0-a.oregon-postgres.render.com` (interna para el API) |
+| Evidencias | Disco del contenedor `nexo-api` | `/app/apps/api/uploads/evidencias` (efímero en plan gratuito) |
+
+El frontend recibe la URL del API en `/config.js`; no está compilada en el bundle. El API valida el
+JWT y recarga el rol desde PostgreSQL en cada petición. La base solo es accesible desde el API y
+desde `psql` con la URL externa y `sslmode=require`.
+
 ## Componentes
 
 | Componente | Tecnología | Carpeta | Puerto local |
 | --- | --- | --- | --- |
 | Frontend | Next.js 15 (App Router) + React 19 | `apps/web` | 3002 |
 | Backend | NestJS 11 + TypeScript | `apps/api` | 3001 |
-| Base de datos | PostgreSQL 17 (`pg`) | `apps/api/sql` | 5432 |
+| Base de datos | PostgreSQL 17 local / 18 en Render (`pg`) | `apps/api/sql` | 5432 |
 | Evidencias | Disco local (multer) | `apps/api/uploads/evidencias` | — |
 
 El backend expone todo bajo el prefijo `/api`. El frontend consume ese prefijo mediante

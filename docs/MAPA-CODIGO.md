@@ -1,5 +1,19 @@
 # Mapa del código: base de datos, backend y frontend
 
+## 0. Dónde está todo en producción
+
+| Componente | Servicio en Render | URL / identificador | Código fuente |
+| --- | --- | --- | --- |
+| Frontend Next.js | `nexo-web` (`srv-dbrqfmjrjlhs73c7tidg`) | <https://nexo-web-lpyd.onrender.com> | `apps/web` |
+| Backend NestJS | `nexo-api` (`srv-dbrqfvjrjlhs73c7ufdg`) | <https://nexo-api-k5cu.onrender.com/api> | `apps/api` |
+| Base de datos | `nexo-db` (`dpg-dbrqfmrrjlhs73c7tin0-a`) | `dpg-dbrqfmrrjlhs73c7tin0-a.oregon-postgres.render.com`, base `nexo_xz9w`, usuario `nexo` | `apps/api/sql` |
+| Evidencias | Disco del contenedor `nexo-api` | `/app/apps/api/uploads/evidencias` (efímero en plan gratuito) | `apps/api/src/config/uploads.ts` |
+| Blueprint | `nexo` (`exs-dbrqf3tg1s2s73d98iug`) | `render.yaml` en la raíz del repositorio | `render.yaml` |
+
+El navegador habla con `nexo-web`, que recibe la URL del API desde `/config.js` (variable
+`NEXO_API_URL`). El API usa la `DATABASE_URL` interna que Render inyecta desde `nexo-db`. La base
+no está expuesta al navegador: solo el API la consulta.
+
 ## 1. Base de datos
 
 | Qué | Dónde |

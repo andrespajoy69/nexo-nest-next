@@ -98,14 +98,24 @@ notificaciones de otro.
 
 ## Checklist antes de publicar
 
-- [ ] `JWT_SECRET` aleatorio de 48 bytes y distinto al de desarrollo.
-- [ ] Contraseñas de `admin@nexo.com`, `analista@nexo.com` y `usuario@nexo.com` cambiadas.
-- [ ] `WEB_ORIGIN` restringido al dominio real del frontend (sin `*`).
-- [ ] `DATABASE_URL` con SSL si el proveedor lo exige (`DB_SSL=true` o `sslmode=require`).
-- [ ] HTTPS en frontend y API (los proveedores lo dan automáticamente).
-- [ ] Volumen persistente para `uploads/evidencias` o almacenamiento de objetos.
-- [ ] Copia de seguridad de la base antes de restaurar un dump.
-- [ ] Verificar con un usuario normal que `/api/admin/*` responde `403`.
+Estado del despliegue de Render al **13/11/2026**:
+
+- [x] `JWT_SECRET` aleatorio generado por Render (44 caracteres, distinto al de desarrollo).
+- [x] Contraseñas de las 7 cuentas restauradas rotadas antes de publicar (no están en Git).
+- [x] `WEB_ORIGIN` restringido a `https://nexo-web-lpyd.onrender.com` (sin `*`).
+- [x] `DATABASE_URL` interna de Render; las conexiones externas de administración usan
+  `sslmode=require`.
+- [x] HTTPS en frontend y API mediante Render.
+- [ ] Volumen persistente para `uploads/evidencias`: **pendiente**. En el plan gratuito el disco es
+  efímero y las evidencias se pierden al redeploy.
+- [x] Copia de seguridad local (`backup/nexo-local.sql`) y restauración verificada en la nube.
+- [x] Verificado con un usuario normal que `/api/admin/*` responde `403` y que la cola global, la
+  asignación y los cambios de estado también quedan bloqueados.
+- [x] Evidencia en cuarentena: el dueño recibe `403` al descargarla y solo un administrador recibe
+  `200`.
+
+> El PostgreSQL gratuito de Render expira el **13/12/2026**. Antes de esa fecha hay que descargar
+> un respaldo o pasar a un plan pago. Ver `docs/DESPLIEGUE.md#limitaciones-del-plan-gratuito`.
 
 ## Pruebas manuales de autorización
 
