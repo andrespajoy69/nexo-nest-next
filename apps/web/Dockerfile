@@ -29,6 +29,7 @@ RUN npm ci --omit=dev --workspace @nexo/web --include-workspace-root \
 
 COPY --from=build /app/apps/web/.next apps/web/.next
 COPY --from=build /app/apps/web/public apps/web/public
+COPY --from=build /app/apps/web/package.json apps/web/package.json
 COPY --from=build /app/apps/web/next.config.mjs apps/web/next.config.mjs
 COPY --from=build /app/apps/web/tsconfig.json apps/web/tsconfig.json
 COPY --from=build /app/apps/web/next-env.d.ts apps/web/next-env.d.ts
